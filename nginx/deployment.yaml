@@ -1,0 +1,28 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: nginx
+  labels:
+    name: nginx
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 4 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:stable-perl
+        ports:
+        - containerPort: 8080
